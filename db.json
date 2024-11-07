@@ -1,18 +1,6 @@
 {
   "products": [
     {
-      "title": "Bruno",
-      "id": "1"
-    },
-    {
-      "title": "Teclado",
-      "id": "qCZLgFe"
-    },
-    {
-      "title": "Jonata",
-      "id": "nB0JUj3"
-    },
-    {
       "title": "sapato",
       "id": "9B5jUh_"
     },
@@ -35,10 +23,6 @@
     {
       "title": "boneca",
       "id": "S6VPgf4"
-    },
-    {
-      "title": "Cueca",
-      "id": "hUAO-Wg"
     }
   ]
 }
