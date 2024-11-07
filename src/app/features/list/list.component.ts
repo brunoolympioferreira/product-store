@@ -4,24 +4,11 @@ import { Product } from '../../shared/interfaces/product.interface';
 import { CardComponent } from './components/cards/card.component';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { filter } from 'rxjs';
+import { ConfirmationDialogService } from '../../shared/services/confirmation-dialog.service';
 
-@Component({
-  selector: 'app-confirmation-dialog',
-  template: `
-<h2 mat-dialog-title>Deletar Produto</h2>
-<mat-dialog-content>
-  Tem certeza que quer deletar esse produto?
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onNo()">Não</button>
-  <button mat-raised-button color="accent" (click)="onYes()" cdkFocusInitial>Sim</button>
-</mat-dialog-actions>
-`,
-  standalone: true,
-  imports: [MatButtonModule, MatDialogModule],
-})
+
 export class ConfirmationDialogComponent {
   matDialogRef = inject(MatDialogRef);
 
@@ -46,7 +33,7 @@ export class ListComponent {
 
   productsService = inject(ProductsService);
   router = inject(Router)
-  matDialog = inject(MatDialog);
+  confirmationDialogService = inject(ConfirmationDialogService);
 
   ngOnInit(): void {
     this.productsService.getAll().subscribe((products) => {
@@ -59,10 +46,9 @@ export class ListComponent {
   }
 
   onDelete(product: Product) {
-    this.matDialog
-      .open(ConfirmationDialogComponent)
-      .afterClosed()
-      .pipe(filter(answer => answer === true))
+    this.confirmationDialogService
+      .openDialog()
+      .pipe(filter((answer) => answer === true))
       .subscribe(() => {
         this.productsService.delete(product.id).subscribe(() => {
           this.productsService.getAll().subscribe((products) => {
